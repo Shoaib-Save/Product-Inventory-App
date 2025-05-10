@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import ProductList from './components/productList';
-import ProductForm from './components/productForm';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import ProductList from './components/ProductList';
+import AddProduct from './components/AddProduct';
+import EditProduct from './components/EditProduct';
+import DeleteConfirmation from './components/DeleteConfirmation';
 
-function App() {
-  const [selected, setSelected] = useState(null);
-  const [refreshToggle, setRefreshToggle] = useState(false);
-
+const App = () => {
   return (
-    <div className="App">
-      <h1>Product Inventory App</h1>
-      <ProductForm
-        selected={selected}
-        refresh={() => setRefreshToggle(!refreshToggle)}
-        clearSelection={() => setSelected(null)}
-      />
-      <ProductList onEdit={setSelected} key={refreshToggle} />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/products" />} />
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/products/add" element={<AddProduct />} />
+        <Route path="/products/edit/:id" element={<EditProduct />} />
+        <Route path="/products/delete/:id" element={<DeleteConfirmation />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
